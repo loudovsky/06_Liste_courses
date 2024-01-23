@@ -1,29 +1,45 @@
 let myButton = document.querySelector('.button');
+let myTable = document.querySelector('.table');
 let myInput = document.querySelector('.input');
 
-function convertir() {
-    let celsius = myInput.value;
-    let farhenheit = (celsius*1.8) + 32 ;
-    let text = `${celsius}°Celsius valent ${farhenheit}°Fahrenheit`;
-    if (celsius === "") {
-        document.querySelector(".result").innerHTML = "Erreur! Veuillez entrer une valeur numérique.";
+
+
+let row = myTable.insertRow();
+
+function insertItem() {
+    let row = myTable.insertRow();
+
+    let cell1 = row.insertCell();
+    let cell2 = row.insertCell();
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
-    else if (celsius < -273.15) {
-        document.querySelector(".result").innerHTML = "Le zéro absolu a été dépassé. Veuillez entrer une valeur supérieure ou égale à -273,15°C";
-    } 
-    else {
-        document.querySelector(".result").innerHTML = text;
-    }
-    myInput.value = "";
+    //fonction qui transforme en capitale la première lettre de l'article inséré dans la liste
+    myInput.value = capitalizeFirstLetter(myInput.value);
+    cell1.innerHTML = myInput.value;
+
+    let cross = document.createElement("span");
+    cross.innerHTML = "❌";
+    cross.addEventListener("click", function() {
+        myTable.deleteRow(row.rowIndex);
+        //row.rowIndex renvoie l'index de la ligne à supprimer
+    });
+
+    cell2.setAttribute("class", "right-cell");
+    cell2.appendChild(cross);
+    //ajoute un enfant (ici <span></span>) à la cellule de droite (cell2)
+    
+    myInput.value = ""
 }
 
 myButton.addEventListener('click', function() {
-    convertir()
+    insertItem()
 })
 
 myInput.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
-        convertir()
+        insertItem()
     } 
 })
 
