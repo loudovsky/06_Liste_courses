@@ -13,12 +13,14 @@ function insertItem() {
             let crosses = document.querySelectorAll('.cross');
             crosses.forEach(function(cross) {
                 cross.addEventListener('click', function() {
+                    nbrItems--
                     cross.closest(".row").remove()
+                    crosses = document.querySelectorAll('.cross')
+                    if (crosses.length == 0){
+                        userTable.innerHTML = `<td>Votre liste des courses est vide 😋</td><td class="right-cell"></td>`
+                    }
                 });
             })
-        }
-        else {
-            emptyMessage.innerText = "Votre liste des courses est vide 😋"
         }
         userInput.value = "" 
 }
