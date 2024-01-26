@@ -17,7 +17,9 @@ function insertItem() {
                 });
             })
         }
-        
+        else {
+            emptyMessage.innerText = "Votre liste des courses est vide 😋"
+        }
         userInput.value = "" 
 }
 
