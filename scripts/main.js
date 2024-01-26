@@ -3,14 +3,15 @@ let myTable = document.querySelector('.table');
 let myInput = document.querySelector('.input');
 
 
-
-let row = myTable.insertRow();
-
 function insertItem() {
     let row = myTable.insertRow();
 
     let cell1 = row.insertCell();
     let cell2 = row.insertCell();
+
+    if (myTable.rows.length === 2) {
+        myTable.rows[0].style.display = "none";
+    }
 
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -23,6 +24,9 @@ function insertItem() {
     cross.innerHTML = "❌";
     cross.addEventListener("click", function() {
         myTable.deleteRow(row.rowIndex);
+        if (myTable.rows.length === 1) {
+            myTable.rows[0].style.display = "table-row";
+        }
         //row.rowIndex renvoie l'index de la ligne à supprimer
     });
 
