@@ -1,49 +1,32 @@
-let myButton = document.querySelector('.button');
-let myTable = document.querySelector('.table');
-let myInput = document.querySelector('.input');
+let userButton = document.querySelector('.button');
+let userTable = document.querySelector('.table');
+let userInput = document.querySelector('.input');
+let emptyMessage = document.querySelector('.empty-message')
+let nbrItems = 0;
 
 
 function insertItem() {
-    let row = myTable.insertRow();
-
-    let cell1 = row.insertCell();
-    let cell2 = row.insertCell();
-
-    if (myTable.rows.length === 2) {
-        myTable.rows[0].style.display = "none";
-    }
-
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-    //fonction qui transforme en capitale la première lettre de l'article inséré dans la liste
-    myInput.value = capitalizeFirstLetter(myInput.value);
-    cell1.innerHTML = myInput.value;
-
-    let cross = document.createElement("span");
-    cross.innerHTML = "❌";
-    cross.addEventListener("click", function() {
-        myTable.deleteRow(row.rowIndex);
-        if (myTable.rows.length === 1) {
-            myTable.rows[0].style.display = "table-row";
+    nbrItems++
+        if (nbrItems != 0) {
+            emptyMessage.innerHTML = "";
+            userTable.innerHTML += `<tr class="row"><td>${userInput.value}</td><td class="right-cell"><span class="cross">❌</span></td></tr>`;
+            let crosses = document.querySelectorAll('.cross');
+            crosses.forEach(function(cross) {
+                cross.addEventListener('click', function() {
+                    cross.closest(".row").remove()
+                });
+            })
         }
-        //row.rowIndex renvoie l'index de la ligne à supprimer
-    });
-
-    cell2.setAttribute("class", "right-cell");
-    cell2.appendChild(cross);
-    //ajoute un enfant (ici <span></span>) à la cellule de droite (cell2)
-    
-    myInput.value = ""
+        
+        userInput.value = "" 
 }
 
-myButton.addEventListener('click', function() {
+userButton.addEventListener('click', function() {
     insertItem()
 })
 
-myInput.addEventListener('keypress', function(e) {
+userInput.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         insertItem()
     } 
 })
-
